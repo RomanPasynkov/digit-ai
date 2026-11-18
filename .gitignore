@@ -10,6 +10,7 @@
 
 # Local recovery archives and intermediate photo analysis
 /local-archives/
+/*.zip
 /data-backups/
 /digit_sheet/photo-reading/
 
