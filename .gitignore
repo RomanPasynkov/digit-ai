@@ -1,0 +1,16 @@
+# Visual Studio local state and build output
+.vs/
+**/.vs/
+**/[Bb]in/
+**/[Oo]bj/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Local recovery archives and intermediate photo analysis
+/local-archives/
+/data-backups/
+/digit_sheet/photo-reading/
+
+# Canonical datasets and the explicit saved-state snapshot remain versioned.
