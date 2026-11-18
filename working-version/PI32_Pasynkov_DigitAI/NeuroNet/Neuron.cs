@@ -49,9 +49,10 @@ namespace PI32_Pasynkov_DigitAI.NeuroNet
                     derivative = LeakyReLU_Derivactivator(sum);
                     break;
 
-                // Экспонента выходного нейрона — как в исходном учебном варианте.
+                // Логит выходного нейрона. Экспоненты и нормализация выполняются
+                // вместе в OutputLayer, чтобы избежать переполнения Math.Exp.
                 case NeuronType.Output:
-                    output = Exp(sum);
+                    output = sum;
                     break;
             }
         }

@@ -50,16 +50,7 @@ namespace PI32_Pasynkov_DigitAI
             this.buttonSetTest = new System.Windows.Forms.Button();
             this.Label_Output = new System.Windows.Forms.Label();
             this.Label_Probability = new System.Windows.Forms.Label();
-            this.buttonSaveTrain = new System.Windows.Forms.Button();
-            this.buttonSaveTest = new System.Windows.Forms.Button();
-            this.buttonCancelTraining = new System.Windows.Forms.Button();
-            this.numericEpochs = new System.Windows.Forms.NumericUpDown();
-            this.labelEpochs = new System.Windows.Forms.Label();
-            this.labelDesiredValue = new System.Windows.Forms.Label();
-            this.labelStatus = new System.Windows.Forms.Label();
-            this.progressTraining = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.numericDesiredValue)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericEpochs)).BeginInit();
             this.SuspendLayout();
             // 
             // button2
@@ -237,23 +228,22 @@ namespace PI32_Pasynkov_DigitAI
             // 
             // buttonTrain
             // 
-            this.buttonTrain.Location = new System.Drawing.Point(400, 138);
+            this.buttonTrain.Location = new System.Drawing.Point(38, 378);
             this.buttonTrain.Name = "buttonTrain";
-            this.buttonTrain.Size = new System.Drawing.Size(150, 30);
+            this.buttonTrain.Size = new System.Drawing.Size(75, 23);
             this.buttonTrain.TabIndex = 17;
             this.buttonTrain.Text = "Обучить";
             this.buttonTrain.UseVisualStyleBackColor = true;
-            this.buttonTrain.Click += new System.EventHandler(this.Train_Click);
+            this.buttonTrain.Click += new System.EventHandler(this.SaveTrainSample_Click);
             // 
             // buttonSetTest
             // 
-            this.buttonSetTest.Location = new System.Drawing.Point(400, 178);
+            this.buttonSetTest.Location = new System.Drawing.Point(38, 408);
             this.buttonSetTest.Name = "buttonSetTest";
-            this.buttonSetTest.Size = new System.Drawing.Size(150, 30);
+            this.buttonSetTest.Size = new System.Drawing.Size(75, 23);
             this.buttonSetTest.TabIndex = 18;
             this.buttonSetTest.Text = "Тест";
             this.buttonSetTest.UseVisualStyleBackColor = true;
-            this.buttonSetTest.Click += new System.EventHandler(this.Test_Click);
             // 
             // Label_Output
             // 
@@ -275,86 +265,10 @@ namespace PI32_Pasynkov_DigitAI
             this.Label_Probability.TabIndex = 20;
             this.Label_Probability.Text = "Вероятность";
             // 
-            // buttonSaveTrain
-            //
-            this.buttonSaveTrain.Location = new System.Drawing.Point(38, 378);
-            this.buttonSaveTrain.Name = "buttonSaveTrain";
-            this.buttonSaveTrain.Size = new System.Drawing.Size(200, 25);
-            this.buttonSaveTrain.TabIndex = 21;
-            this.buttonSaveTrain.Text = "Добавить в обучающую выборку";
-            this.buttonSaveTrain.UseVisualStyleBackColor = true;
-            this.buttonSaveTrain.Click += new System.EventHandler(this.SaveTrainSample_Click);
-            //
-            // buttonSaveTest
-            //
-            this.buttonSaveTest.Location = new System.Drawing.Point(38, 413);
-            this.buttonSaveTest.Name = "buttonSaveTest";
-            this.buttonSaveTest.Size = new System.Drawing.Size(200, 25);
-            this.buttonSaveTest.TabIndex = 22;
-            this.buttonSaveTest.Text = "Добавить в тестовую выборку";
-            this.buttonSaveTest.UseVisualStyleBackColor = true;
-            this.buttonSaveTest.Click += new System.EventHandler(this.SaveTestSample_Click);
-            //
-            // buttonCancelTraining
-            //
-            this.buttonCancelTraining.Location = new System.Drawing.Point(565, 138);
-            this.buttonCancelTraining.Name = "buttonCancelTraining";
-            this.buttonCancelTraining.Size = new System.Drawing.Size(150, 30);
-            this.buttonCancelTraining.TabIndex = 23;
-            this.buttonCancelTraining.Text = "Остановить";
-            this.buttonCancelTraining.Enabled = false;
-            this.buttonCancelTraining.UseVisualStyleBackColor = true;
-            this.buttonCancelTraining.Click += new System.EventHandler(this.CancelTraining_Click);
-            //
-            // numericEpochs
-            //
-            this.numericEpochs.Location = new System.Drawing.Point(565, 105);
-            this.numericEpochs.Name = "numericEpochs";
-            this.numericEpochs.Minimum = 1;
-            this.numericEpochs.Maximum = 100000;
-            this.numericEpochs.Value = 1000;
-            this.numericEpochs.Size = new System.Drawing.Size(100, 20);
-            this.numericEpochs.TabIndex = 24;
-            //
-            // labelEpochs
-            //
-            this.labelEpochs.Location = new System.Drawing.Point(400, 107);
-            this.labelEpochs.Name = "labelEpochs";
-            this.labelEpochs.Size = new System.Drawing.Size(155, 20);
-            this.labelEpochs.Text = "Число эпох обучения:";
-            //
-            // labelDesiredValue
-            //
-            this.labelDesiredValue.Location = new System.Drawing.Point(95, 332);
-            this.labelDesiredValue.Name = "labelDesiredValue";
-            this.labelDesiredValue.Size = new System.Drawing.Size(150, 20);
-            this.labelDesiredValue.Text = "Правильная цифра";
-            //
-            // labelStatus
-            //
-            this.labelStatus.Location = new System.Drawing.Point(400, 255);
-            this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(360, 210);
-            this.labelStatus.Text = "Нарисуйте цифру, укажите правильный ответ и добавьте пример в нужную выборку. Затем запустите обучение или тестирование.";
-            //
-            // progressTraining
-            //
-            this.progressTraining.Location = new System.Drawing.Point(400, 220);
-            this.progressTraining.Name = "progressTraining";
-            this.progressTraining.Size = new System.Drawing.Size(315, 20);
-            //
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.ClientSize = new System.Drawing.Size(799, 496);
-            this.Controls.Add(this.buttonSaveTrain);
-            this.Controls.Add(this.buttonSaveTest);
-            this.Controls.Add(this.buttonCancelTraining);
-            this.Controls.Add(this.numericEpochs);
-            this.Controls.Add(this.labelEpochs);
-            this.Controls.Add(this.labelDesiredValue);
-            this.Controls.Add(this.labelStatus);
-            this.Controls.Add(this.progressTraining);
             this.Controls.Add(this.Label_Probability);
             this.Controls.Add(this.Label_Output);
             this.Controls.Add(this.buttonSetTest);
@@ -378,9 +292,8 @@ namespace PI32_Pasynkov_DigitAI
             this.Controls.Add(this.button2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "Form1";
-            this.Text = "Распознавание цифр";
+            this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.numericDesiredValue)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericEpochs)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -408,14 +321,6 @@ namespace PI32_Pasynkov_DigitAI
         private System.Windows.Forms.Button buttonSetTest;
         private System.Windows.Forms.Label Label_Output;
         private System.Windows.Forms.Label Label_Probability;
-        private System.Windows.Forms.Button buttonSaveTrain;
-        private System.Windows.Forms.Button buttonSaveTest;
-        private System.Windows.Forms.Button buttonCancelTraining;
-        private System.Windows.Forms.NumericUpDown numericEpochs;
-        private System.Windows.Forms.Label labelEpochs;
-        private System.Windows.Forms.Label labelDesiredValue;
-        private System.Windows.Forms.Label labelStatus;
-        private System.Windows.Forms.ProgressBar progressTraining;
     }
 }
 

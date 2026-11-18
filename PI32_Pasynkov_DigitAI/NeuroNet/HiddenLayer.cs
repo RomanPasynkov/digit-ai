@@ -1,9 +1,9 @@
-﻿namespace PI32_Pasynkov_DigitAI.NeuroNet
+namespace PI32_Pasynkov_DigitAI.NeuroNet
 {
     class HiddenLayer : Layer
     {
-        public HiddenLayer(int non, int nonp, NeuronType nt, string type, string memoryDirectory = null) :
-            base(non, nonp, nt, type, memoryDirectory)
+        public HiddenLayer(int non, int nonp, NeuronType nt, string type) :
+            base(non, nonp, nt, type)
         { }
 
         public override void Recognize(Network net, Layer nextLayer)
@@ -16,25 +16,41 @@
             nextLayer.Data = hidden_out;
         }
 
-        // gr_sums — сигнал от следующего слоя, до производной активации этого слоя.
-        public override double[] BackwardBass(double[] gr_sums)
+        // Обратный проход: видимая часть фотографии.
+        public override double[] BackwardPass(double[] gr_sums)
         {
-            if (gr_sums == null || gr_sums.Length != numofneurons)
-                throw new System.ArgumentException("Неверный размер сигнала ошибки скрытого слоя.", nameof(gr_sums));
-
-            double[] deltas = new double[numofneurons];
-            for (int i = 0; i < numofneurons; i++)
-                deltas[i] = neurons[i].Derivative * gr_sums[i];
-
             double[] gr_sum = new double[numofprevneurons];
+
+            // На фото тело этого цикла свёрнуто. Следующая заглушка —
+            // НЕ код преподавателя: она явно отмечает недостающий фрагмент.
             for (int j = 0; j < numofprevneurons; j++)
             {
-                for (int i = 0; i < numofneurons; i++)
-                    gr_sum[j] += neurons[i].Weights[j + 1] * deltas[i];
+                MissingPhotoGradient();
             }
 
-            ApplyDeltas(deltas);
+            // Ниже — показанный на фотографии цикл коррекции весов.
+            for (int i = 0; i < numofneurons; i++)
+                for (int n = 0; n < numofprevneurons + 1; n++)
+                {
+                    double deltaw;
+                    if (n == 0)
+                        deltaw = momentum * lastdeltaweights[i, 0] +
+                            learningrate * neurons[i].Derivative * gr_sums[i];
+                    else
+                        deltaw = momentum * lastdeltaweights[i, n] +
+                            learningrate * neurons[i].Inputs[n - 1] * neurons[i].Derivative * gr_sums[i];
+
+                    lastdeltaweights[i, n] = deltaw;
+                    neurons[i].Weights[n] += deltaw;
+                }
             return gr_sum;
+        }
+
+        // Только техническая заглушка для отсутствующего на фото фрагмента.
+        private static void MissingPhotoGradient()
+        {
+            throw new System.NotImplementedException(
+                "На фотографии свёрнут расчёт градиентной суммы скрытого слоя. Нужен исходный фрагмент с занятия.");
         }
     }
 }

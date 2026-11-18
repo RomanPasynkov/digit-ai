@@ -33,7 +33,7 @@ namespace PI32_Pasynkov_DigitAI.NeuroNet
         }
 
         // Конструктор
-        protected Layer(int non, int nonp, NeuronType nt, string nm_Layer)
+        protected Layer(int non, int nonp, NeuronType nt, string nm_Layer, string memoryDirectory = null)
         {
             if (non <= 0) throw new ArgumentOutOfRangeException(nameof(non));
             if (nonp <= 0) throw new ArgumentOutOfRangeException(nameof(nonp));
@@ -43,7 +43,7 @@ namespace PI32_Pasynkov_DigitAI.NeuroNet
             numofprevneurons = nonp;
             neurons = new Neuron[non];
             name_Layer = nm_Layer;
-            pathDirWeights = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "memory");
+            pathDirWeights = memoryDirectory ?? Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "memory");
             pathFileWeights = Path.Combine(pathDirWeights, name_Layer + "_memory.csv");
             lastdeltaweights = new double[non, nonp + 1];
 
@@ -153,7 +153,34 @@ namespace PI32_Pasynkov_DigitAI.NeuroNet
             }
         }
 
+        public void SaveWeights()
+        {
+            WeightInitialize(MemoryMode.SET, pathFileWeights);
+        }
+
+        public void ResetMomentum()
+        {
+            Array.Clear(lastdeltaweights, 0, lastdeltaweights.Length);
+        }
+
+        // Сначала вычисляем сигнал для предыдущего слоя по старым весам,
+        // затем применяем поправки. Нулевой вес — смещение, его вход равен 1.
+        protected void ApplyDeltas(double[] deltas)
+        {
+            for (int i = 0; i < numofneurons; i++)
+            {
+                for (int n = 0; n <= numofprevneurons; n++)
+                {
+                    double input = n == 0 ? 1d : neurons[i].Inputs[n - 1];
+                    double deltaWeight = momentum * lastdeltaweights[i, n]
+                        + learningrate * input * deltas[i];
+                    lastdeltaweights[i, n] = deltaWeight;
+                    neurons[i].Weights[n] += deltaWeight;
+                }
+            }
+        }
+
         abstract public void Recognize(Network net, Layer nextLayer);
-        abstract public double[] BackwardPass(double[] stuff);
+        abstract public double[] BackwardBass(double[] stuff);
     }
 }

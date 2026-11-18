@@ -1,7 +1,7 @@
 param([string]$PreviewPath)
 
 $ErrorActionPreference = 'Stop'
-$projectDirectory = Join-Path $PSScriptRoot '..\PI32_Pasynkov_DigitAI'
+$projectDirectory = Join-Path $PSScriptRoot '..\working-version\PI32_Pasynkov_DigitAI'
 $compiler = 'C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Roslyn\csc.exe'
 $checkDirectory = Join-Path ([System.IO.Path]::GetTempPath()) ('DigitAI-checks-' + [Guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $checkDirectory | Out-Null
