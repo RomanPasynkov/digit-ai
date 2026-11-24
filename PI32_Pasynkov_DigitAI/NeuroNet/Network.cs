@@ -15,13 +15,47 @@ namespace PI32_Pasynkov_DigitAI.NeuroNet
 
         public Network() { }
 
-        // Существовавший прямой проход. Цикла обучения на фотографиях нет.
         public void ForwardPass(double[] netInput)
         {
             hidden_layer1.Data = netInput;
             hidden_layer1.Recognize(null, hidden_layer2);
             hidden_layer2.Recognize(null, output_layer);
             output_layer.Recognize(this, null);
+        }
+
+        public void Train(Network net)
+        {
+            input_layer = new InputLayer(NetworkMode.Train);
+
+            int epoches = 200;
+            double tmpSumError;
+            double[] errors;
+            double[] temp_gsums1;
+            double[] temp_gsums2;
+
+            e_error_avr = new double[epoches];
+            for (int k = 0; k < epoches; k++)
+            {
+                e_error_avr[k] = 0;
+                input_layer.Shuffling_Array_Rows(input_layer.Trainset);
+                for (int i = 0; i < input_layer.Trainset.GetLength(0); i++)
+                {
+                    double[] tmpTrain = new double[15];
+                    for (int j = 0; j < tmpTrain.Length; j++)
+                        tmpTrain[j] = input_layer.Trainset[i, j + 1];
+
+                    // Прямой проход обучающего образа.
+                    ForwardPass(tmpTrain);
+
+                    // Вычисление ошибки по итерации.
+                    tmpSumError = 0;
+                    errors = new double[fact.Length];
+                    for (int x = 0; x < errors.Length; x++)
+                    {
+                        // На фото тело цикла обрезано.
+                    }
+                }
+            }
         }
     }
 }

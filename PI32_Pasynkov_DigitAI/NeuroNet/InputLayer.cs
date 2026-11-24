@@ -8,6 +8,7 @@ namespace PI32_Pasynkov_DigitAI.NeuroNet
         // Поля
         private double[,] trainset;
         private double[,] testset;
+        private readonly Random random = new Random();
 
         // Свойства
         public double[,] Trainset { get => trainset; }
@@ -35,8 +36,6 @@ namespace PI32_Pasynkov_DigitAI.NeuroNet
                     }
                     break;
 
-                // По подписи одногруппницы: тот же код для TEST,
-                // с заменой trainset на testset и train.txt на test.txt.
                 case NetworkMode.Test:
                     tmpArrStr = File.ReadAllLines(path + "test.txt");
                     testset = new double[tmpArrStr.Length, 16];
@@ -49,6 +48,23 @@ namespace PI32_Pasynkov_DigitAI.NeuroNet
                         }
                     }
                     break;
+            }
+        }
+
+        public void Shuffling_Array_Rows(double[,] arr)
+        {
+            int columns = arr.GetLength(1);
+
+            // Алгоритм Фишера — Йетса. Меняем местами строки целиком.
+            for (int row = arr.GetLength(0) - 1; row > 0; row--)
+            {
+                int otherRow = random.Next(row + 1);
+                for (int column = 0; column < columns; column++)
+                {
+                    double value = arr[row, column];
+                    arr[row, column] = arr[otherRow, column];
+                    arr[otherRow, column] = value;
+                }
             }
         }
     }
