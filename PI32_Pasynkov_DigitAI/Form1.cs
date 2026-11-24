@@ -1,20 +1,25 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Windows.Forms;
+using System.Text;
+using System.Threading.Tasks;
 using PI32_Pasynkov_DigitAI.NeuroNet;
+using System.Windows.Forms;
+using System.IO;
 
 namespace PI32_Pasynkov_DigitAI
 {
     public partial class Form1 : Form
     {
-        double[] inputPixels;
+        double[] inputPixels; // Массив входных данных
         private Network network;
-
         public Form1()
         {
             InitializeComponent();
+
             inputPixels = new double[15];
             network = new Network();
         }
@@ -22,6 +27,7 @@ namespace PI32_Pasynkov_DigitAI
         private void Change_Status_Button(object sender, EventArgs e)
         {
             Button pixelButton = (Button)sender;
+
             if (pixelButton.BackColor != Color.Black)
             {
                 inputPixels[pixelButton.TabIndex] = 1d;
@@ -34,17 +40,17 @@ namespace PI32_Pasynkov_DigitAI
             }
         }
 
-        // Старый обработчик: кнопка «Обучить» только сохраняет пример.
-        // Полноценного запуска обучения на предоставленных фотографиях нет.
         private void SaveTrainSample_Click(object sender, EventArgs e)
         {
             string path = AppDomain.CurrentDomain.BaseDirectory + "train.txt";
             string tmpStr = numericDesiredValue.Value.ToString();
-            for (int i = 0; i < inputPixels.Length; i++)
+
+            for(int i = 0; i< inputPixels.Length; i++)
             {
                 tmpStr += " " + inputPixels[i].ToString();
             }
             tmpStr += '\n';
+
             File.AppendAllText(path, tmpStr);
         }
 
